@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/graph-lab/janusgraph-schema-manager.svg?branch=master)](https://travis-ci.org/graph-lab/janusgraph-schema-manager)
+
 # Titan/JanusGraph Schema Manager
 
 
@@ -17,7 +19,8 @@ The tool is written in Java and has not been carefully tested yet. Still, given 
 
 By default the tool is built without the sandbox components (see below).
 
-Run "mvn clean package" to build the schema manager or "mvn -Psandbox clean package" if you want to build the schema manager with sandbox components. The distribution package will be available as target/titan-schema-manager-<Version>-SNAPSHOT-dist[-sandbox].zip
+Run "mvn clean package" to build the schema manager or "mvn -Psandbox clean package" if you want to build the schema manager with sandbox components.
+The distribution package will be available as target/janusgraph-schema-manager-<Version>-SNAPSHOT-dist\[-sandbox].zip
 
 
 # Running the schema manager
@@ -90,7 +93,7 @@ Build & get packages:
 mvn -Psandbox clean package
 ```
 
-Unpack target/titan-schema-manager-<version>-SNAPSHOT-dist-sandbox.zip somewhere.
+Unpack target/janusgraph-schema-manager-<Version>-SNAPSHOT-dist\[-sandbox].zip somewhere.
 
 Start local DynamoDB with the data stored in /tmp/db by running:
 
@@ -122,7 +125,7 @@ All above-mentioned applications use the configuration files from "examples/sand
 Note that the console does not connect anywhere by default. You need to connect to the local Gremlin server first using the following command:
 
 ```
-:remote connect tinkerpop.server ./titan-schema-manager-1.0-SNAPSHOT/examples/sandbox/gremlin/gremlin-localhost.yaml
+:remote connect tinkerpop.server ./examples/sandbox/gremlin/gremlin-localhost.yaml
 ```
 
 To test that everything is working you can run this command in Gremlin console:
@@ -187,6 +190,21 @@ bin/schema_manager.sh  -g graph.properties -r UNAVAILABLE -w schema.json
 ```
 
 In this case the state of each index defined in the schema will be verified. If an index or any of its properties is in the state REGISTERED or INSTALLED, the tool will re-index the data and enable the index. If the index or any of its components is in DISABLED state, it will be ignored.
+
+## Running a Gremlin/Groovy script without the console
+
+You can run one or more Gremlin/Groovy scripts directly using a simple script runner. 
+
+```
+bin/run_script -g graph.properties script1.groovy script2.groovy ...
+```
+
+It stops on the first failure and the exit status is set to 1 in case of an error.
+
+
+# Additional documentation
+
+## [Graph schema visualization with GraphViz](docs/README-graphviz.md)
 
 
 # Plans for future
